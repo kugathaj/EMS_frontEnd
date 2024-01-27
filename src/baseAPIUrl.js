@@ -1,0 +1,1 @@
+export const {baseAPIUrl} = "http://ems-backend.test/api/";

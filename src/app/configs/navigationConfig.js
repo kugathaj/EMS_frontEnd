@@ -91,6 +91,28 @@ const navigationConfig = [
         translate: 'CONTACTS',
       },
       {
+        id: 'apps.project',
+        title: 'Project',
+        type: 'collapse',
+        icon: 'heroicons-outline:shopping-cart',
+        // translate: 'ECOMMERCE',
+        children: [
+          {
+            id: 'project-projects',
+            title: 'Projects',
+            type: 'item',
+            url: 'apps/project/projects',
+            end: true,
+          },
+          {
+            id: 'project-projects-detail',
+            title: 'Project Detail',
+            type: 'item',
+            url: 'apps/e-commerce/products/1/a-walk-amongst-friends-canvas-print',
+          }
+        ],
+      },
+      {
         id: 'apps.ecommerce',
         title: 'ECommerce',
         type: 'collapse',
