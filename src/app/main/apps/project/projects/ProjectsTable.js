@@ -147,14 +147,7 @@ function ProjectsTable(props) {
               data,
               [
                 (o) => {
-                  switch (order.id) {
-                    case 'categories': {
-                      return o.categories[0];
-                    }
-                    default: {
-                      return o[order.id];
-                    }
-                  }
+                      return o["id"];
                 },
               ],
               [order.direction]
@@ -181,53 +174,52 @@ function ProjectsTable(props) {
                       />
                     </TableCell>
 
-                    <TableCell
-                      className="w-52 px-4 md:px-0"
-                      component="th"
-                      scope="row"
-                      padding="none"
-                    >
-                      {/* {n.images.length > 0 && n.featuredImageId ? (
-                        <img
-                          className="w-full block rounded"
-                          src={_.find(n.images, { id: n.featuredImageId }).url}
-                          alt={n.name}
-                        />
-                      ) : (
-                        <img
-                          className="w-full block rounded"
-                          src="assets/images/apps/ecommerce/product-image-placeholder.png"
-                          alt={n.name}
-                        />
-                      )} */}
-                    </TableCell>
-
                     <TableCell className="p-4 md:p-16" component="th" scope="row">
-                      {n.name}
+                      {n.id}
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16 truncate" component="th" scope="row">
                       {/* {n.categories.join(', ')} */}
+                      {n.name}
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      <span>$</span>
-                      {n.priceTaxIncl}
+                      {/* <span>$</span> */}
+                      {n.start_date}
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
-                      {n.quantity}
-                      <i
+                      {n.end_date}
+                      {/* <i
                         className={clsx(
                           'inline-block w-8 h-8 rounded mx-8',
                           n.quantity <= 5 && 'bg-red',
                           n.quantity > 5 && n.quantity <= 25 && 'bg-orange',
                           n.quantity > 25 && 'bg-green'
                         )}
-                      />
+                      /> */}
                     </TableCell>
 
                     <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
+                      {/* <span>$</span> */}
+                      {n.status}
+                    </TableCell>
+
+                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
+                      {/* <span>$</span> */}
+                      {n.project_manager_id}
+                    </TableCell>
+
+                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
+                      {/* <span>$</span> */}
+                      {n.priority}
+                    </TableCell>
+                    <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
+                      {/* <span>$</span> */}
+                      <span>for button</span>
+                    </TableCell>
+
+                    {/* <TableCell className="p-4 md:p-16" component="th" scope="row" align="right">
                       {n.active ? (
                         <FuseSvgIcon className="text-green" size={20}>
                           heroicons-outline:check-circle
@@ -237,7 +229,7 @@ function ProjectsTable(props) {
                           heroicons-outline:minus-circle
                         </FuseSvgIcon>
                       )}
-                    </TableCell>
+                    </TableCell> */}
                   </TableRow>
                 );
               })}

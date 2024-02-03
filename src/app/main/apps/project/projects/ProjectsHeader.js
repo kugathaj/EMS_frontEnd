@@ -33,7 +33,7 @@ function ProjectsHeader() {
                     <FuseSvgIcon color="disabled">heroicons-solid:search</FuseSvgIcon>
 
                     <Input
-                        placeholder="Search products"
+                        placeholder="Search Projects"
                         className="flex flex-1"
                         disableUnderline
                         fullWidth
