@@ -6,8 +6,7 @@ import { baseAPIUrl } from 'src/baseAPIUrl';
 export const getProject = createAsyncThunk('eCommerceApp/project/getProject', async (productId) => {
   // const response = await axios.get(`/api/ecommerce/products/${productId}`);
   const response = await axios.get(`http://ems-backend.test/api/projects/${productId}`);
-  const data = await response.data;
-
+  const data = await response.data.project;
   return data === undefined ? null : data;
 });
 
@@ -34,6 +33,7 @@ const projectSlice = createSlice({
 });
 
 export const { newProduct, resetProduct } = projectSlice.actions;
+export const selectProject = ({ eCommerceApp }) => eCommerceApp.project;
 
 
 export default projectSlice.reducer;

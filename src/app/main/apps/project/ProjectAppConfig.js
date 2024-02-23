@@ -2,6 +2,7 @@ import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
 
 const Projects = lazy(() => import('./projects/Projects'));
+const Project = lazy(() => import('./project/Project'));
 
 
 const ProjectAppConfig = {
@@ -11,13 +12,13 @@ const ProjectAppConfig = {
 
     routes: [
     {
-        path: 'apps/project/projects',
+        path: 'apps/projects',
         element: <Projects />,
     },
-    // {
-    //     path: 'apps/project/projects/:projectId/*',
-    //     element: <Product />,
-    // },
+    {
+        path: 'apps/projects/:projectId/*',
+        element: <Project />,
+    },
     // {
     //     path: 'apps/project',
     //     element: <Navigate to="projects" />,

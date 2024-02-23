@@ -94,14 +94,14 @@ const navigationConfig = [
         id: 'apps.project',
         title: 'Project',
         type: 'collapse',
-        icon: 'heroicons-outline:shopping-cart',
+        icon: 'heroicons-outline:presentation-chart-bar',
         // translate: 'ECOMMERCE',
         children: [
           {
             id: 'project-projects',
             title: 'Projects',
             type: 'item',
-            url: 'apps/project/projects',
+            url: 'apps/projects',
             end: true,
           },
           {

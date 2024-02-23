@@ -15,14 +15,10 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
-import { getProduct, newProduct, resetProduct, selectProduct } from '../store/productSlice';
+import { getProject, newProduct, resetProduct, selectProject } from '../store/projectSlice';
 import reducer from '../store';
-import ProductHeader from './ProductHeader';
+import ProjectHeader from './ProjectHeader';
 import BasicInfoTab from './tabs/BasicInfoTab';
-import InventoryTab from './tabs/InventoryTab';
-import PricingTab from './tabs/PricingTab';
-import ProductImagesTab from './tabs/ProductImagesTab';
-import ShippingTab from './tabs/ShippingTab';
 
 /**
  * Form Validation Schema
@@ -34,30 +30,30 @@ const schema = yup.object().shape({
     .min(5, 'The product name must be at least 5 characters'),
 });
 
-function Product(props) {
+function Project(props) {
   const dispatch = useDispatch();
-  const product = useSelector(selectProduct);
+  const product = useSelector(selectProject);
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 
   const routeParams = useParams();
-  useEffect(()=>{
-    console.log(routeParams);
-  },[routeParams]);
+
   const [tabValue, setTabValue] = useState(0);
   const [noProduct, setNoProduct] = useState(false);
+
   const methods = useForm({
     mode: 'onChange',
     defaultValues: {},
     resolver: yupResolver(schema),
   });
+  
   const { reset, watch, control, onChange, formState } = methods;
   const form = watch();
 
   useDeepCompareEffect(() => {
     function updateProductState() {
-      const { productId } = routeParams;
+      const { projectId } = routeParams;
 
-      if (productId === 'new') {
+      if (projectId === 'new') {
         /**
          * Create New Product data
          */
@@ -66,7 +62,7 @@ function Product(props) {
         /**
          * Get Product data
          */
-        dispatch(getProduct(productId)).then((action) => {
+        dispatch(getProject(projectId)).then((action) => {
           /**
            * If the requested product is not exist show message
            */
@@ -138,7 +134,7 @@ function Product(props) {
    */
   if (
     _.isEmpty(form) ||
-    (product && routeParams.productId !== product.id && routeParams.productId !== 'new')
+    (product && routeParams.projectId !== product.id && routeParams.projectId !== 'new')
   ) {
     return <FuseLoading />;
   }
@@ -146,7 +142,7 @@ function Product(props) {
   return (
     <FormProvider {...methods}>
       <FusePageCarded
-        header={<ProductHeader />}
+        header={<ProjectHeader />}
         content={
           <>
             <Tabs
@@ -159,30 +155,10 @@ function Product(props) {
               classes={{ root: 'w-full h-64 border-b-1' }}
             >
               <Tab className="h-64" label="Basic Info" />
-              <Tab className="h-64" label="Product Images" />
-              <Tab className="h-64" label="Pricing" />
-              <Tab className="h-64" label="Inventory" />
-              <Tab className="h-64" label="Shipping" />
             </Tabs>
             <div className="p-16 sm:p-24 max-w-3xl">
               <div className={tabValue !== 0 ? 'hidden' : ''}>
                 <BasicInfoTab />
-              </div>
-
-              <div className={tabValue !== 1 ? 'hidden' : ''}>
-                <ProductImagesTab />
-              </div>
-
-              <div className={tabValue !== 2 ? 'hidden' : ''}>
-                <PricingTab />
-              </div>
-
-              <div className={tabValue !== 3 ? 'hidden' : ''}>
-                <InventoryTab />
-              </div>
-
-              <div className={tabValue !== 4 ? 'hidden' : ''}>
-                <ShippingTab />
               </div>
             </div>
           </>
@@ -193,4 +169,4 @@ function Product(props) {
   );
 }
 
-export default withReducer('eCommerceApp', reducer)(Product);
+export default withReducer('eCommerceApp', reducer)(Project);

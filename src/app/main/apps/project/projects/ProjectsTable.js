@@ -75,8 +75,8 @@ function ProjectsTable(props) {
     setSelected([]);
   }
 
-  function handleClick(item) {
-    props.navigate(`/apps/e-commerce/projects/${item.id}/${item.handle}`);
+  function handleClick(project) {
+    props.navigate(`/apps/projects/${project.id}`);
   }
 
   function handleCheck(event, id) {
