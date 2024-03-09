@@ -32,12 +32,14 @@ const schema = yup.object().shape({
 
 function Project(props) {
   const dispatch = useDispatch();
-  const product = useSelector(selectProject);
+  const project = useSelector(selectProject); // okay
+
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 
   const routeParams = useParams();
 
   const [tabValue, setTabValue] = useState(0);
+  
   const [noProduct, setNoProduct] = useState(false);
 
   const methods = useForm({
@@ -48,6 +50,13 @@ function Project(props) {
   
   const { reset, watch, control, onChange, formState } = methods;
   const form = watch();
+
+  useEffect(()=>{
+
+    console.log("routeParams",routeParams)
+    console.log("Project", project)
+  },[project,routeParams])
+
 
   useDeepCompareEffect(() => {
     function updateProductState() {
@@ -77,14 +86,14 @@ function Project(props) {
   }, [dispatch, routeParams]);
 
   useEffect(() => {
-    if (!product) {
+    if (!project) {
       return;
     }
     /**
      * Reset the form on product state changes
      */
-    reset(product);
-  }, [product, reset]);
+    reset(project);
+  }, [project, reset]);
 
   useEffect(() => {
     return () => {
@@ -134,7 +143,7 @@ function Project(props) {
    */
   if (
     _.isEmpty(form) ||
-    (product && routeParams.projectId !== product.id && routeParams.projectId !== 'new')
+    (project && routeParams.projectId != project.id && routeParams.projectId != 'new')
   ) {
     return <FuseLoading />;
   }

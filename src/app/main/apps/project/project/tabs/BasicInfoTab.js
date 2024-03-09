@@ -1,10 +1,15 @@
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { Controller, useFormContext } from 'react-hook-form';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 function BasicInfoTab(props) {
   const methods = useFormContext();
+
+  
   const { control, formState } = methods;
+
+
   const { errors } = formState;
 
   return (
@@ -46,60 +51,61 @@ function BasicInfoTab(props) {
         )}
       />
 
-      <Controller
-        name="categories"
-        control={control}
-        defaultValue={[]}
-        render={({ field: { onChange, value } }) => (
-          <Autocomplete
-            className="mt-8 mb-16"
-            multiple
-            freeSolo
-            options={[]}
-            value={value}
-            onChange={(event, newValue) => {
-              onChange(newValue);
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                placeholder="Select multiple categories"
-                label="Categories"
-                variant="outlined"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            )}
-          />
-        )}
-      />
+      <div className="flex flex-column sm:flex-row w-full items-center space-x-16">
+        <Controller
+          name="start"
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <DateTimePicker
+              className="mt-8 mb-16 w-full"
+              value={new Date(value)}
+              onChange={onChange}
+              slotProps={{
+                textField: {
+                  label: 'Start',
+                  variant: 'outlined',
+                },
+              }}
+              // maxDate={end}
+            />
+          )}
+        />
+
+        <Controller
+          name="end"
+          control={control}
+          defaultValue=""
+          render={({ field: { onChange, value } }) => (
+            <DateTimePicker
+              className="mt-8 mb-16 w-full"
+              value={new Date(value)}
+              onChange={onChange}
+              slotProps={{
+                textField: {
+                  label: 'End',
+                  variant: 'outlined',
+                },
+              }}
+              // minDate={start}
+            />
+          )}
+        />
+      </div>
 
       <Controller
-        name="tags"
+        name="comments"
         control={control}
-        defaultValue={[]}
-        render={({ field: { onChange, value } }) => (
-          <Autocomplete
+        render={({ field }) => (
+          <TextField
+            {...field}
             className="mt-8 mb-16"
-            multiple
-            freeSolo
-            options={[]}
-            value={value}
-            onChange={(event, newValue) => {
-              onChange(newValue);
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                placeholder="Select multiple tags"
-                label="Tags"
-                variant="outlined"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            )}
+            id="comments"
+            label="Comments"
+            type="text"
+            multiline
+            rows={5}
+            variant="outlined"
+            fullWidth
           />
         )}
       />
