@@ -52,10 +52,8 @@ function Project(props) {
   const form = watch();
 
   useEffect(()=>{
-
-    console.log("routeParams",routeParams)
-    console.log("Project", project)
-  },[project,routeParams])
+    console.log("form",form)
+  },[form])
 
 
   useDeepCompareEffect(() => {
