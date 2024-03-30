@@ -8,6 +8,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
 import InputAdornment from '@mui/material/InputAdornment';
 import { useParams } from 'react-router-dom';
+import { format } from 'date-fns';
 
 
 const ITEM_HEIGHT = 48;
@@ -140,7 +141,10 @@ function BasicInfoTab(props) {
               id="start_date"
               value={new Date(value)}
               views={["year", "month", "day"]}
-              onChange={onChange}
+              onChange={(newValue)=>{
+                const formattedDate = format(newValue, 'yyyy-MM-dd'); // Format the date
+                onChange(formattedDate); // Call onChange with the formatted date
+              }}
               selected={value}
               slotProps={{
                 textField: {
@@ -161,9 +165,11 @@ function BasicInfoTab(props) {
               className="mt-8 mb-16 w-full"
               id="end_date"
               value={new Date(value)}
-              inputFormat="MM/DD/YYYY" // 09/13/2022
               selected={value}
-              onChange={onChange}
+              onChange={(newValue)=>{
+                const formattedDate = format(newValue, 'yyyy-MM-dd'); // Format the date
+                onChange(formattedDate); // Call onChange with the formatted date
+              }}
               slotProps={{
                 textField: {
                   label: 'End',

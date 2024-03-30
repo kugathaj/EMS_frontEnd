@@ -51,7 +51,9 @@ const projectSlice = createSlice({
           description: '',
           project_manager_id: '',
           status: '',
-          priority: ''
+          priority: '',
+          start_date: '',
+          end_date: ''
         },
       }),
     },
