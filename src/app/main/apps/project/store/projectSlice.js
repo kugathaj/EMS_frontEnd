@@ -11,6 +11,32 @@ export const getProject = createAsyncThunk('eCommerceApp/project/getProject', as
 });
 
 
+export const updateProject = createAsyncThunk(
+  'eCommerceApp/product/updateProject',
+  async (projectData, { dispatch, getState }) => {
+    const { id } = getState().eCommerceApp.project;
+    const response = await axios.put('http://ems-backend.test/api/projects/'+id, projectData);
+
+    const data = await response.data.project;
+
+    return data;
+  }
+);
+
+export const saveProject = createAsyncThunk(
+  'eCommerceApp/product/updateProject',
+  async (projectData, { dispatch, getState }) => {
+
+    const response = await axios.post('http://ems-backend.test/api/projects', projectData);
+
+    const data = await response.data.project;
+
+    return data;
+  }
+);
+
+
+
 const projectSlice = createSlice({
   name: 'eCommerceApp/product',
   initialState: null,
@@ -23,6 +49,9 @@ const projectSlice = createSlice({
           id: FuseUtils.generateGUID(),
           name: '',
           description: '',
+          project_manager_id: '',
+          status: '',
+          priority: ''
         },
       }),
     },

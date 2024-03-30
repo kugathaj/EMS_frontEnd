@@ -7,6 +7,8 @@ import * as React from 'react';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
 import InputAdornment from '@mui/material/InputAdornment';
+import { useParams } from 'react-router-dom';
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -19,35 +21,41 @@ const MenuProps = {
   },
 };
 
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
+const projectManagers = [
+  {
+    name:  'Oliver Hansen',
+    id: 1
+  },
+  {
+    name:  'Van Henry',
+    id: 2
+  },
+  {
+    name:  'April Tucker',
+    id: 3
+  },
+  {
+    name:  'Ralph Hubbard',
+    id: 4
+  }
 ];
+
 const statusList = [
   'On progress',
   'Finished',
 ];
+
 const priorityList = [
   'Urgent',
-  'low',
+  'Low',
 ];
 
-function getStyles(name, personName, theme) {
-  return {
-    fontWeight:
-      personName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
 
 
 function BasicInfoTab(props) {
   const methods = useFormContext();
-
-  
+  const routeParams = useParams();
+  const { projectId } = routeParams;
   const { control, formState } = methods;
 
 
@@ -56,22 +64,35 @@ function BasicInfoTab(props) {
   React.useEffect(()=>{console.log(formState)},[formState])
 
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState(["Select Project Manager"]);
-  const [statusType, setStatusType] = React.useState(["Select Status"]);
-  const [priorityType, setPriorityType] = React.useState(["Select Priority"]);
-
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
-  };
 
   return (
     <div>
+
+      { projectId != "new" ? 
+      
+        (
+          <Controller
+          name="id"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              disabled
+              className="mt-8 mb-16"
+              // error={!!errors.name}
+              required
+              // helperText={errors?.name?.message}
+              label="Id"
+              autoFocus
+              id="id"
+              variant="outlined"
+              fullWidth
+            />
+          )}
+        />
+        ) : ''
+      }
+
       <Controller
         name="name"
         control={control}
@@ -118,6 +139,7 @@ function BasicInfoTab(props) {
               className="mt-8 mb-16 w-full"
               id="start_date"
               value={new Date(value)}
+              views={["year", "month", "day"]}
               onChange={onChange}
               selected={value}
               slotProps={{
@@ -139,6 +161,7 @@ function BasicInfoTab(props) {
               className="mt-8 mb-16 w-full"
               id="end_date"
               value={new Date(value)}
+              inputFormat="MM/DD/YYYY" // 09/13/2022
               selected={value}
               onChange={onChange}
               slotProps={{
@@ -154,33 +177,31 @@ function BasicInfoTab(props) {
       </div>
 
       <Controller
-        name="Project Manager"
+        name="project_manager_id"
         control={control}
-        render={({ field }) => (
+        render={({ field: {value, onChange} }) => (
           <>
             <Select
               labelId="demo-multiple-name-label"
               id="demo-multiple-name"
               // multiple
-              value={personName}
-              onChange={handleChange}
+              value={value != "" ? value : "Select Project Manager"}
+              onChange={onChange}
               input={<OutlinedInput label="Name" />}
               MenuProps={MenuProps}
             >
               <MenuItem
                   key="Select Project Manager"
                   value="Select Project Manager"
-                  style={getStyles(name, personName, theme)}
                 >
                   Select Project Manager
               </MenuItem>
-              {names.map((name) => (
+              {projectManagers.map((projectManager) => (
                 <MenuItem
-                  key={name}
-                  value={name}
-                  style={getStyles(name, personName, theme)}
+                  key={projectManager.id}
+                  value={projectManager.id}
                 >
-                  {name}
+                  {projectManager.name}
                 </MenuItem>
               ))}
             </Select>
@@ -189,23 +210,22 @@ function BasicInfoTab(props) {
         )}
       />
       <Controller
-        name="Status"
+        name="status"
         control={control}
-        render={({ field }) => (
+        render={({ field : {value, onChange} }) => (
           <>
             <Select
               labelId="demo-multiple-name-label"
               id="demo-multiple-name"
               // multiple
-              value={statusType}
-              onChange={handleChange}
+              value={value != "" ? value : "Select Status"}
+              onChange={onChange}
               input={<OutlinedInput label="Name" />}
               MenuProps={MenuProps}
             >
               <MenuItem
                   key="Select Status"
                   value="Select Status"
-                  style={getStyles(name, personName, theme)}
                 >
                   Select Status
               </MenuItem>
@@ -213,7 +233,6 @@ function BasicInfoTab(props) {
                 <MenuItem
                   key={status}
                   value={status}
-                  style={getStyles(name, personName, theme)}
                 >
                   {status}
                 </MenuItem>
@@ -226,21 +245,20 @@ function BasicInfoTab(props) {
       <Controller
         name="priority"
         control={control}
-        render={({ field }) => (
+        render={({ field : {onChange, value} }) => (
           <>
             <Select
               labelId="demo-multiple-name-label"
               id="demo-multiple-name"
               // multiple
-              value={priorityType}
-              onChange={handleChange}
+              value={value != "" ? value : "Select Priority"}
+              onChange={onChange}
               input={<OutlinedInput label="Name" />}
               MenuProps={MenuProps}
             >
               <MenuItem
                   key="Select Priority"
                   value="Select Priority"
-                  style={getStyles(name, personName, theme)}
                 >
                   Select Priority
               </MenuItem>
@@ -248,7 +266,6 @@ function BasicInfoTab(props) {
                 <MenuItem
                   key={priority}
                   value={priority}
-                  style={getStyles(name, personName, theme)}
                 >
                   {priority}
                 </MenuItem>

@@ -4,9 +4,10 @@ import Typography from '@mui/material/Typography';
 import { motion } from 'framer-motion';
 import { useFormContext } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import _ from '@lodash';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
+import { saveProject, updateProject } from '../store/projectSlice';
 // import { removeProduct, saveProduct } from '../store/projectSlice';
 
 function ProjectHeader(props) {
@@ -19,6 +20,8 @@ function ProjectHeader(props) {
   const name = watch('name');
   const theme = useTheme();
   const navigate = useNavigate();
+  const routeParams = useParams();
+  const { projectId } = routeParams;
 
   // function handleSaveProduct() {
   //   dispatch(saveProduct(getValues()));
@@ -29,6 +32,14 @@ function ProjectHeader(props) {
   //     navigate('/apps/e-commerce/products');
   //   });
   // }
+
+  function handleSaveProject() {
+      dispatch(saveProject(getValues()));
+  }
+
+  function handleUpdateProject() {
+      dispatch(updateProject(getValues()));
+  }
 
   return (
     <div className="flex flex-col sm:flex-row flex-1 w-full items-center justify-between space-y-8 sm:space-y-0 py-32 px-24 md:px-32">
@@ -101,15 +112,33 @@ function ProjectHeader(props) {
         >
           Remove
         </Button>
-        <Button
-          className="whitespace-nowrap mx-4"
-          variant="contained"
-          color="secondary"
-          disabled={_.isEmpty(dirtyFields) || !isValid}
-          // onClick={handleSaveProduct}
-        >
-          Save
-        </Button>
+
+        {
+          projectId == "new" ? 
+          ( 
+            <Button
+              className="whitespace-nowrap mx-4"
+              variant="contained"
+              color="secondary"
+              disabled={_.isEmpty(dirtyFields) || !isValid}
+              onClick={handleSaveProject}
+            >
+              Save
+            </Button>
+          ) : 
+
+          (
+            <Button
+              className="whitespace-nowrap mx-4"
+              variant="contained"
+              color="secondary"
+              disabled={_.isEmpty(dirtyFields) || !isValid}
+              onClick={handleUpdateProject}
+            >
+              Update
+            </Button>
+          )
+        }       
       </motion.div>
     </div>
   );
