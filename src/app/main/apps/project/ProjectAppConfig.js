@@ -19,10 +19,10 @@ const ProjectAppConfig = {
         path: 'apps/projects/:projectId/*',
         element: <Project />,
     },
-    // {
-    //     path: 'apps/project',
-    //     element: <Navigate to="projects" />,
-    // },
+    {
+        path: 'apps/projects',
+        element: <Navigate to="projects" />,
+    },
     ],
 };
 

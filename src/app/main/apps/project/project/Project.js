@@ -51,11 +51,6 @@ function Project(props) {
   const { reset, watch, control, onChange, formState } = methods;
   const form = watch();
 
-  useEffect(()=>{
-    console.log("form",form)
-  },[form])
-
-
   useDeepCompareEffect(() => {
     function updateProductState() {
       const { projectId } = routeParams;

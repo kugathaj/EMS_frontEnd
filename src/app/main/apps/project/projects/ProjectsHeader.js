@@ -1,15 +1,22 @@
 import React from 'react';
-import withReducer from 'app/store/withReducer';
-
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { motion } from 'framer-motion';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
+import { Link } from 'react-router-dom';
+import { selectProjectsSearchText, setProjectsSearchText } from '../store/projectsSlice';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 
 function ProjectsHeader() {
+
+    const dispatch = useDispatch();
+    const searchText = useSelector(selectProjectsSearchText);
+
+
   return (
     <>
         <div className="flex flex-col sm:flex-row space-y-16 sm:space-y-0 flex-1 w-full items-center justify-between py-32 px-24 md:px-32">
@@ -37,11 +44,11 @@ function ProjectsHeader() {
                         className="flex flex-1"
                         disableUnderline
                         fullWidth
-                        // value={searchText}
+                        value={searchText}
                         inputProps={{
                         'aria-label': 'Search',
                         }}
-                        // onChange={(ev) => dispatch(setProductsSearchText(ev))}
+                        onChange={(ev) => dispatch(setProjectsSearchText(ev))}
                     />
                 </Paper>
                 <motion.div
@@ -50,8 +57,8 @@ function ProjectsHeader() {
                 >
                     <Button
                         className=""
-                        // component={Link}
-                        to="/apps/e-commerce/products/new"
+                        component={Link}
+                        to="/apps/projects/new"
                         variant="contained"
                         color="secondary"
                         startIcon={<FuseSvgIcon>heroicons-outline:plus</FuseSvgIcon>}

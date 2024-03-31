@@ -7,8 +7,7 @@ import { useDispatch } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import _ from '@lodash';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import { saveProject, updateProject } from '../store/projectSlice';
-// import { removeProduct, saveProduct } from '../store/projectSlice';
+import { removeProject, saveProject, updateProject } from '../store/projectSlice';
 
 function ProjectHeader(props) {
   const dispatch = useDispatch();
@@ -23,22 +22,18 @@ function ProjectHeader(props) {
   const routeParams = useParams();
   const { projectId } = routeParams;
 
-  // function handleSaveProduct() {
-  //   dispatch(saveProduct(getValues()));
-  // }
-
-  // function handleRemoveProduct() {
-  //   dispatch(removeProduct()).then(() => {
-  //     navigate('/apps/e-commerce/products');
-  //   });
-  // }
-
   function handleSaveProject() {
       dispatch(saveProject(getValues()));
   }
 
   function handleUpdateProject() {
       dispatch(updateProject(getValues()));
+  }
+
+  function handleRemoveProject() {
+      dispatch(removeProject()).then(()=>{
+        navigate('/apps/projects')
+      });
   }
 
   return (
@@ -52,7 +47,7 @@ function ProjectHeader(props) {
             className="flex items-center sm:mb-12"
             component={Link}
             role="button"
-            to="/apps/e-commerce/products"
+            to="/apps/projects"
             color="inherit"
           >
             <FuseSvgIcon size={20}>
@@ -107,7 +102,7 @@ function ProjectHeader(props) {
           className="whitespace-nowrap mx-4"
           variant="contained"
           color="secondary"
-          // onClick={handleRemoveProduct}
+          onClick={handleRemoveProject}
           startIcon={<FuseSvgIcon className="hidden sm:flex">heroicons-outline:trash</FuseSvgIcon>}
         >
           Remove

@@ -22,4 +22,3 @@ function Projects() {
 }
 
 export default withReducer('eCommerceApp', reducer)(Projects);
-// export default Projects;

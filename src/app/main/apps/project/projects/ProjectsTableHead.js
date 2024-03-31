@@ -15,6 +15,7 @@ import { Box } from '@mui/system';
 import TableHead from '@mui/material/TableHead';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { lighten } from '@mui/material/styles';
+import { removeProjects } from '../store/projectsSlice';
 
 const rows = [
   {
@@ -24,13 +25,6 @@ const rows = [
     label: 'id',
     sort: false,
   },
-  // {
-  //   id: 'p_id',
-  //   align: 'left',
-  //   disablePadding: false,
-  //   label: 'id',
-  //   sort: true,
-  // },
   {
     id: 'name',
     align: 'left',
@@ -145,7 +139,7 @@ function ProjectsTableHead(props) {
                 <MenuList>
                   <MenuItem
                     onClick={() => {
-                      dispatch(removeProducts(selectedProjectIds));
+                      dispatch(removeProjects(selectedProjectIds));
                       props.onMenuItemClick();
                       closeSelectedProductsMenu();
                     }}

@@ -35,7 +35,14 @@ export const saveProject = createAsyncThunk(
   }
 );
 
-
+export const removeProject = createAsyncThunk(
+  'eCommerceApp/product/removeProject',
+  async (val, { dispatch, getState }) => {
+    const { id } = getState().eCommerceApp.project;
+    await axios.delete(`http://ems-backend.test/api/projects/${id}`);
+    return id;
+  }
+);
 
 const projectSlice = createSlice({
   name: 'eCommerceApp/product',
@@ -60,6 +67,9 @@ const projectSlice = createSlice({
   },
   extraReducers: {
     [getProject.fulfilled]: (state, action) => action.payload,
+    [saveProject.fulfilled]: (state, action) => action.payload,
+    [updateProject.fulfilled]: (state, action) => action.payload,
+    [removeProject.fulfilled]: (state, action) => null,
   },
 });
 

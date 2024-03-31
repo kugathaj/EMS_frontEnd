@@ -5,10 +5,20 @@ import { baseAPIUrl } from 'src/baseAPIUrl';
 export const getProjects = createAsyncThunk('eCommerceApp/projects/getProjects', async () => {
     const response = await axios.get(`http://ems-backend.test/api/projects`);
     const data = await response.data.projects;
-    console.log("getProjects",response.data.projects);
     return data;
 
 });
+
+export const removeProjects = createAsyncThunk(
+  'eCommerceApp/projects',
+  async (projectIds, { dispatch, getState }) => {
+
+    console.log('projectIds',projectIds);
+    await axios.delete(`http://ems-backend.test/api/projects/${projectIds}`);
+    return projectIds
+    ;
+  }
+);
 
 const projectsAdapter = createEntityAdapter({});
 
@@ -21,7 +31,7 @@ const projectsSlice = createSlice({
       searchText: '',
     }),
     reducers: {
-      setProductsSearchText: {
+      setProjectsSearchText: {
         reducer: (state, action) => {
           state.searchText = action.payload;
         },
@@ -30,6 +40,7 @@ const projectsSlice = createSlice({
     },
     extraReducers: {
       [getProjects.fulfilled]: projectsAdapter.setAll,
+      [removeProjects.fulfilled]: (state, action) => projectsAdapter.removeMany(state, action.payload),
     },
   });
 
